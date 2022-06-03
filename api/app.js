@@ -10,7 +10,7 @@ const root = path.resolve(__dirname, '..');
 app.use(function (req, res, next) { console.log(req.url); next(); });
 
 // Directly serve static content from /client
-app.use(express.static(root + '/client'));
+app.use(express.static(root + '/dist/busqueda'));
 
 // Simple REST API that returns some entities
 app.get('/api/entities', (req, res) =>
