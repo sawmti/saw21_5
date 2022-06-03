@@ -3,6 +3,11 @@ const path = require('path');
 const https = require('https');
 const querystring = require("querystring")
 
+const { wqCountry,wqCountryInfo } = require("./wikidata/wikiQuery");
+const { wikiCall,formatCountries,formatCountryDetail } = require("./wikidata/wikiUtil");
+//const { connection } = require("./db/mysql-util.txt");
+MariaDBConnector = require('./db/mariadb-util');
+
 const app = express();
 const root = path.resolve(__dirname, '..');
 
@@ -22,28 +27,59 @@ app.get('/api/entitiesStatic', (req, res) =>
   })
 );
 
-app.get( '/api/',  );
+app.get('/api/entities2/:id', (req, res) => {
 
-app.get('/api/entities/:id', (req, res) => {
-  console.log(`Searching ${req.params.id}`);
-  /*
-  const queryParams = new URLSearchParams(
-    [['query', `select * where { wd:Q${req.params.id} rdfs:label $label . FILTER (lang($label) = 'es')}`],
-    ['format', 'json']
-    ]).toString();
-  */
-  const wikidataQuery =
-      `SELECT ?country ?countryLabel ?image
-        WHERE 
-        {
-          ?country wdt:P31 wd:Q6256.
-          ?country wdt:P41 ?image.
-          SERVICE wikibase:label { bd:serviceParam wikibase:language "[AUTO_LANGUAGE],en". }
-        }`;
+  const resultado =  wikiCall( wqCountry(),1 ).then( wikiLst => {
+    console.log(wikiLst.entities);
+    /*const ulEntities = document.getElementById("entities");
+    data.entities.forEach(entity => {
+    const liEntity = document.createElement("li");
+    const text = document.createTextNode(entity);
+    liEntity.appendChild(text);
+    ulEntities.appendChild(liEntity);*/
+  })
+  console.log( "resultado1:"+ resultado );
+  res.send( { data: resultado } );
+});
 
+app.get('/api/country/:id', (req, res) => {
+
+  console.log( "Parametro URL:"+req.params.id);
   const queryParams = new URLSearchParams(
-      [['query', wikidataQuery ],
+      [['query', wqCountryInfo( req.params.id ) ],
       ['format', 'json']
+      ]).toString();
+
+  const options = {
+    hostname: 'query.wikidata.org',
+    port: 443,
+    path: `/sparql?${queryParams}`,
+    method: 'GET',
+    headers: { 'User-Agent': 'Example/1.0' }
+  }
+  https.get(options, httpres => {
+    let data = [];
+    console.log('Status Code:', httpres.statusCode);
+    httpres.on('data', chunk => {
+      data.push(chunk);
+    });
+    httpres.on('end', () => {
+      const result = Buffer.concat(data).toString();
+      const json = JSON.parse(result);
+      const arr = json.results.bindings;
+      const results = formatCountryDetail(arr);
+      res.send( { data: results } )
+    });
+  }).on('error', err => {
+    console.log('Error: ', err.message);
+  })
+});
+
+app.get('/api/countries', (req, res) => {
+
+  const queryParams = new URLSearchParams(
+      [['query', wqCountry() ],
+        ['format', 'json']
       ]).toString();
 
   const options = {
@@ -62,49 +98,19 @@ app.get('/api/entities/:id', (req, res) => {
     httpres.on('end', () => {
 
       const result = Buffer.concat(data).toString();
-      //console.log(`Result obtained:\n${result}\n---`);
       const json = JSON.parse(result);
       const arr = json.results.bindings;
-
-      /** @TODO
-       * Modificar la salida para aplicar un formato especifico a cada consulta.
-       * @type {*|string}
-       */
-      const results = formatCountriesJson(arr);
-      console.log(results.bindings);
-
+      const results = formatCountries(arr);
       res.send( { data: results } )
-
-      /*
-      const label = bindings.length > 0 ? bindings[0].label.value : 'Not found';
-      res.send({
-        entity: `${req.params.id}`,
-        label: `${label}`
-      })
-      */
     });
   }).on('error', err => {
     console.log('Error: ', err.message);
   })
 });
 
-const getValue = (obj) => {
-  return obj === undefined ? '' : obj.value;
-}
+app.get('/api/selectedCountries', (req, res) => {
 
-const replaceUrl = (obj) => {
-  const url = 'http://www.wikidata.org/entity/';
-  const value = getValue(obj);
-  return value.replace(url, '');
-}
-
-const formatCountriesJson = (arr) => {
-  return arr.map((element) => ({
-    id: replaceUrl(element.country),
-    search_uri: getValue(element.country),
-    icon_svg_uri: getValue(element.image),
-    name: getValue(element.countryLabel),
-  }))
-}
+  MariaDBConnector.query( 'SELECT * FROM COUNTRIES' );
+});
 
 module.exports = app;
