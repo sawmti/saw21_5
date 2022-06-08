@@ -108,9 +108,14 @@ app.get('/api/countries', (req, res) => {
   })
 });
 
-app.get('/api/selectedCountries', (req, res) => {
+app.get('/api/selectedCountries', async (req, res) => {
 
-  MariaDBConnector.query( 'SELECT * FROM COUNTRIES' );
+  console.log('Api - selectedCountries');
+  let result = await MariaDBConnector.countryDetailDb();
+  console.log(result)
+  //res.send( result );
+  //res.send( { data: result } );
+
 });
 
 module.exports = app;
