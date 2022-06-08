@@ -17,8 +17,6 @@ const wqCountryInfo =  function ( idPais ) {
             }
             ORDER BY ?countryLabel`;
 
-    //console.log(query);
-
     return query;
 };
 

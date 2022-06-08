@@ -8,7 +8,6 @@
     </content>
     <orderEntry type="inheritedJdk" />
     <orderEntry type="sourceFolder" forTests="false" />
-    <orderEntry type="module" module-name="node-mysql-crud-api" />
-    <orderEntry type="module" module-name="nodejs-posgresql" />
+    <orderEntry type="module" module-name="JS-HTML5-localstorage-CRUD" />
   </component>
 </module>

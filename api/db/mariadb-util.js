@@ -1,31 +1,41 @@
 const mariadb = require('mariadb');
 
 const config = {
-    host: 'uyu7j8yohcwo35j3.cbetxkdyhwsb.us-east-1.rds.amazonaws.com',
-    user: 'h5cggq78o2k3gyvt',
-    password: 'e62ujskuugm5vbqz',
-    database: 'irlibi0wp60foa8y',
-    connectionLimit: 5,
-    acquireTimeout: 300
+    host: 'cxmgkzhk95kfgbq4.cbetxkdyhwsb.us-east-1.rds.amazonaws.com',
+    user: 'vfd5ypq3v19j5od0',
+    password: 'vqybj6kg7frt5g4s',
+    database: 'tnfyqjrcd09evsxw',
+    connectionLimit: 10000,
+    acquireTimeout: 10000
 }
 
 class MariaDBConnector {
-    dbConnector = mariadb.createPool( config );
-    async query( param ){
-        var conn = await this.dbConnector.getConnection();
-        var ret = null;
 
-        conn.query( param )
-            .then( data => {
+    async getDbCountries(){
+        const dbConnector = mariadb.createPool( config );
+        console.log( 'getDbCountries' ) ;
+        const conn = await dbConnector.getConnection();
+        const promise = new Promise((resolve, reject) => {
+            var ret = null;
+            conn.query( 'SELECT * FROM COUNTRIES', (error, result) => {
+                if (error) reject(error);
+                resolve( result );
+            } );
+        });
+        conn.end();
+        return promise;
+
+
+        /*conn.query( {rowAsArray:true, sql: param} ).then(
+            data => {
                 ret = data;
-                console.log(data);
+                //console.log(data);
                 conn.end();
             })
             .catch( err => {
                 console.log(err);
                 conn.end();
-            })
-        return ret;
+        })*/
     }
 }
 

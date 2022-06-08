@@ -1,18 +1,101 @@
-<html>
-
+<!doctype html>
+<html lang="en">
 <head>
-    <title>Ejemplo</title>
-    <link rel="stylesheet" href="style.css">
-    <script src="code.js"></script>
-</head>
+    <!-- Required meta tags -->
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11.0.16/dist/sweetalert2.all.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.1/dist/js/bootstrap.bundle.min.js" integrity="sha384-gtEjrD/SeCtmISkJkNUaaKMoLD0//ElJ19smozuHV6z3Iehds+3Ulb9Bn9Plx0x4" crossorigin="anonymous"></script>
 
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+
+    <!-- Bootstrap CSS -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.1/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-+0n0xVW2eSR5OomGNYDnhzAbDsOXxcvSN1TPprVMTNDbiYZCxYbOOl7+AMvyTG2x" crossorigin="anonymous">
+
+    <title>CRUD FROM API</title>
+
+    <link href="css/index.css" rel="stylesheet">
+    <script src="js/index.js"></script>
+    <script>
+        window.onload = function() {
+            loadTable();
+            loadDatabaseTable();
+            document.getElementById("defaultOpen").click();
+            //document.getElementById("wikidataContainer").className += " active";
+        };
+    </script>
+
+</head>
 <body>
-    <h1>Entidades en curso MTI 2021</h1>
-    <button type="button" onclick="fillEntities()">Ver entidades</button>
-    <button type="button" onclick="fillCountries()">Ver paises</button>
-    <button type="button" onclick="fillCountryDetail()">Ver detalle de pais</button>
-    <ul id="entities" />
-    <ul id="countries" />
-    <ul id="countryDetail" />
+
+<nav class="navbar navbar-dark bg-mynav">
+    <div class="container-fluid">
+        <a class="navbar-brand" href="#">My App</a>
+    </div>
+</nav>
+
+<div class="tab">
+    <button class="tablinks" id="defaultOpen" onclick="openTabs(event, 'wikidataContainer')">Wikidata</button>
+    <button class="tablinks" onclick="openTabs(event, 'databaseContainer')">Database</button>
+</div>
+
+<div class="container tabcontent" id="wikidataContainer">
+    <div class="d-flex bd-highlight mb-3">
+        <div class="me-auto p-2 bd-highlight"><h2>Wikidata</div>
+        <!--
+        <div class="p-2 bd-highlight">
+            <button type="button" class="btn btn-secondary" onclick="showUserCreateBox()">Create</button>
+        </div>
+        -->
+    </div>
+
+    <div class="table-responsive">
+        <table class="table">
+            <thead>
+            <tr>
+                <th scope="col">#</th>
+                <th scope="col">Bandera</th>
+                <th scope="col">Nombre de Pais</th>
+                <th scope="col">URL Wikidata</th>
+                <!-- <th scope="col">Username</th> -->
+                <th scope="col">Action</th>
+            </tr>
+            </thead>
+            <tbody id="mytable">
+            <tr>
+                <th scope="row" colspan="5">Loading...</th>
+            </tr>
+            </tbody>
+        </table>
+    </div>
+</div>
+<div class="container tabcontent" id="databaseContainer">
+    <div class="d-flex bd-highlight mb-3">
+        <div class="me-auto p-2 bd-highlight"><h2>Database</div>
+        <div class="p-2 bd-highlight">
+            <button type="button" class="btn btn-secondary" onclick="showUserCreateBox()">Create</button>
+        </div>
+    </div>
+
+    <div class="table-responsive">
+        <table class="table">
+            <thead>
+            <tr>
+                <th scope="col">#</th>
+                <th scope="col">Bandera</th>
+                <th scope="col">Nombre de Pais</th>
+                <th scope="col">URL Wikidata</th>
+                <!-- <th scope="col">Username</th> -->
+                <th scope="col">Action</th>
+            </tr>
+            </thead>
+            <tbody id="mytable">
+            <tr>
+                <th scope="row" colspan="5">Loading...</th>
+            </tr>
+            </tbody>
+        </table>
+    </div>
+</div>
+
 </body>
 </html>

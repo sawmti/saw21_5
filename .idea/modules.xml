@@ -2,8 +2,7 @@
 <project version="4">
   <component name="ProjectModuleManager">
     <modules>
-      <module fileurl="file://$PROJECT_DIR$/../node-mysql-crud-api/.idea/node-mysql-crud-api.iml" filepath="$PROJECT_DIR$/../node-mysql-crud-api/.idea/node-mysql-crud-api.iml" />
-      <module fileurl="file://$PROJECT_DIR$/../nodejs-posgresql/.idea/nodejs-posgresql.iml" filepath="$PROJECT_DIR$/../nodejs-posgresql/.idea/nodejs-posgresql.iml" />
+      <module fileurl="file://$PROJECT_DIR$/../JS-HTML5-localstorage-CRUD/.idea/JS-HTML5-localstorage-CRUD.iml" filepath="$PROJECT_DIR$/../JS-HTML5-localstorage-CRUD/.idea/JS-HTML5-localstorage-CRUD.iml" />
       <module fileurl="file://$PROJECT_DIR$/.idea/saw21_5.git.iml" filepath="$PROJECT_DIR$/.idea/saw21_5.git.iml" />
     </modules>
   </component>

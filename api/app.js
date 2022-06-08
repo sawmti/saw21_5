@@ -30,7 +30,7 @@ app.get('/api/entitiesStatic', (req, res) =>
 app.get('/api/entities2/:id', (req, res) => {
 
   const resultado =  wikiCall( wqCountry(),1 ).then( wikiLst => {
-    console.log(wikiLst.entities);
+    console.log( wikiLst.entities );
     /*const ulEntities = document.getElementById("entities");
     data.entities.forEach(entity => {
     const liEntity = document.createElement("li");
@@ -96,7 +96,6 @@ app.get('/api/countries', (req, res) => {
       data.push(chunk);
     });
     httpres.on('end', () => {
-
       const result = Buffer.concat(data).toString();
       const json = JSON.parse(result);
       const arr = json.results.bindings;
@@ -108,9 +107,26 @@ app.get('/api/countries', (req, res) => {
   })
 });
 
-app.get('/api/selectedCountries', (req, res) => {
+app.get('/api/databaseCountries', async (req, res) => {
+      console.log('Api Database Select');
+      try {
+        const responseDb = await MariaDBConnector.getDbCountries( );
 
-  MariaDBConnector.query( 'SELECT * FROM COUNTRIES' );
+        console.log( responseDb );
+        res.send( { data: responseDb } );
+
+      }
+      catch (e){
+        console.log(e);
+          res.send(e);
+      }
+
+    /* console.log('Rows:'  + rows);
+    const result = Buffer.concat(rows).toString();
+    const json = JSON.parse(result);
+    const arr = json.results.bindings;
+    const results = formatCountries(arr);
+    res.send( { data: results } )*/
 });
 
 module.exports = app;
