@@ -96,11 +96,11 @@ app.get('/api/countries', (req, res) => {
       data.push(chunk);
     });
     httpres.on('end', () => {
-
       const result = Buffer.concat(data).toString();
       const json = JSON.parse(result);
       const arr = json.results.bindings;
       const results = formatCountries(arr);
+
       res.send( { data: results } )
     });
   }).on('error', err => {
@@ -111,7 +111,17 @@ app.get('/api/countries', (req, res) => {
 app.get('/api/selectedCountries', async (req, res) => {
 
   console.log('Api - selectedCountries');
-  let result = await MariaDBConnector.countryDetailDb();
+  let result = await MariaDBConnector.countriesListDb();
+  console.log('Result: ' + result)
+  //res.send( result );
+  //res.send( { data: result } );
+
+});
+
+app.post('/api/insertCountry', async (req, res) => {
+
+  console.log('Api - selectedCountries');
+  let result = await MariaDBConnector.insCountry( "" );
   console.log(result)
   //res.send( result );
   //res.send( { data: result } );
