@@ -20,7 +20,7 @@ export class BusquedaComponent implements OnInit {
   }
 
   ngOnInit(): void {
-this.http.get("/api/countries").subscribe((data:any)=>{
+this.http.get ("/api/countries").subscribe((data:any)=>{
   this.cities=data.data;
  })
 //[{"id":"Q889","search_uri":"http://www.wikidata.org/entity/Q889","icon_svg_uri":"http://commons.wikimedia.org/wiki/Special:FilePath/Flag%20of%20the%20Taliban.svg","name":"Afganistán"},
