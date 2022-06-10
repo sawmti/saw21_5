@@ -43,3 +43,4 @@ docker-compose up
 ## Credits
 
 This skeleton is based on a [similar skeleton](https://github.com/Arquisoft/radarin_0) created by [Pablo González](https://github.com/pglez82) which is a bit more complex because the web client is implemented as a [React application](https://reactjs.org/) and the server contains monitoring and load testing.
+
