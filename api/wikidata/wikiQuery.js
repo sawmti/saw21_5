@@ -15,9 +15,8 @@ const wqCountryInfo =  function ( idPais ) {
                 OPTIONAL { ?country wdt:P36 ?capital } .
                 SERVICE wikibase:label { bd:serviceParam wikibase:language "es" }
             }
-            ORDER BY ?countryLabel`;
-
-    //console.log(query);
+            ORDER BY ?countryLabel
+            LIMIT 1`;
 
     return query;
 };

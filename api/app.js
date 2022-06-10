@@ -108,11 +108,12 @@ app.get('/api/countries', (req, res) => {
   })
 });
 
-app.get('/api/selectedCountries', async (req, res) => {
+app.get('/api/databaseCountries', async (req, res) => {
 
-  console.log('Api - selectedCountries');
-  let result = await MariaDBConnector.countriesListDb();
-  console.log('Result: ' + result)
+  console.log('Api - databaseCountries');
+  let results = await MariaDBConnector.countriesListDb();
+  console.log('Result: ' + results)
+  res.send( { data: results } )
   //res.send( result );
   //res.send( { data: result } );
 

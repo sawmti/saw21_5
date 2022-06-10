@@ -10,6 +10,19 @@
 		<meta charset="utf-8" />
 		<meta name="viewport" content="width=device-width, initial-scale=1, user-scalable=no" />
 		<link rel="stylesheet" href="assets/css/main.css" />
+		<script src="code.js" type="text/javascript"></script>
+		<script src="http://ajax.googleapis.com/ajax/libs/jquery/1.7.1/jquery.min.js" type="text/javascript"></script>
+		<script>
+			$( document ).ready(function() {
+				console.log( "document loaded" );
+				getWikidataCountries();
+				getDatabaseCountries();
+			});
+
+			$( window ).on( "load", function() {
+				console.log( "window loaded" );
+			});
+		</script>
 		<noscript><link rel="stylesheet" href="assets/css/noscript.css" /></noscript>
 	</head>
 	<body class="is-preload">
@@ -84,8 +97,10 @@
 						</div>
 					</div>
 					-->
-					<div>
-						<table><tr><td>Número</td><td>Título</td><td>Descripción</td><td>Palabra clave</td><td>Imagen</td><td>Acciones<td></tr>
+					<div id="wikidataTable">
+						<!--
+						<table>
+							<tr><td>#</td><td>Bandera</td><td>Nombre de Pais</td><td>URL Wikidata</td><td>Acciones<td></tr>
 							<tr itemscope itemtype="https://schema.org/Country">
 								<td> ${i} </td>
 								<td itemprop="name"> ${object.title} </td>
@@ -97,6 +112,13 @@
 								</td>
 							</tr>
 						</table>
+						-->
+					</div>
+					<!-- Cuando no hay registros -->
+					<div id="wikidataTableNoData" style="display:none">
+						<table>
+							<tr><td align="center">No se ha encontrado información de Wikidata, favor F5</td></tr>
+						</table>
 					</div>
 				</div>
 			</section>
@@ -104,26 +126,45 @@
 		<!-- Two -->
 			<section id="two" class="main style2">
 				<div class="container">
+					<header class="major">
+						<h2>Database Info</h2>
+					</header>
+					<!--
 					<div class="row gtr-150">
-						<div class="col-6 col-12-medium">
-							<ul class="major-icons">
-								<li><span class="icon solid style1 major fa-code"></span></li>
-								<li><span class="icon solid style2 major fa-bolt"></span></li>
-								<li><span class="icon solid style3 major fa-camera-retro"></span></li>
-								<li><span class="icon solid style4 major fa-cog"></span></li>
-								<li><span class="icon solid style5 major fa-desktop"></span></li>
-								<li><span class="icon solid style6 major fa-calendar"></span></li>
-							</ul>
-						</div>
 						<div class="col-6 col-12-medium">
 							<header class="major">
 								<h2>Lorem ipsum dolor adipiscing<br />
 								amet dolor consequat</h2>
 							</header>
-							<p>Adipiscing a commodo ante nunc accumsan interdum mi ante adipiscing. A nunc lobortis non nisl amet vis volutpat aclacus nascetur ac non. Lorem curae eu ante amet sapien in tempus ac. Adipiscing id accumsan adipiscing ipsum.</p>
-							<p>Blandit faucibus proin. Ac aliquam integer adipiscing enim non praesent vis commodo nunc phasellus cubilia ac risus accumsan. Accumsan blandit. Lobortis phasellus non lobortis dit varius mi varius accumsan lobortis. Blandit ante aliquam lacinia lorem lobortis semper morbi col faucibus vitae integer placerat accumsan orci eu mi odio tempus adipiscing adipiscing adipiscing curae consequat feugiat etiam dolore.</p>
-							<p>Adipiscing a commodo ante nunc accumsan interdum mi ante adipiscing. A nunc lobortis non nisl amet vis volutpat aclacus nascetur ac non. Lorem curae eu ante amet sapien in tempus ac. Adipiscing id accumsan adipiscing ipsum.</p>
+							<p>Adipiscing a commodo ante nunc accumsan et interdum mi ante adipiscing. A nunc lobortis non nisl amet vis sed volutpat aclacus nascetur ac non. Lorem curae et ante amet sapien sed tempus adipiscing id accumsan.</p>
 						</div>
+						<div class="col-6 col-12-medium imp-medium">
+							<span class="image fit"><img src="images/pic01.jpg" alt="" /></span>
+						</div>
+					</div>
+					-->
+					<div id="databaseTable">
+						<!--
+						<table>
+							<tr><td>#</td><td>Bandera</td><td>Nombre de Pais</td><td>URL Wikidata</td><td>Acciones<td></tr>
+							<tr itemscope itemtype="https://schema.org/Country">
+								<td> ${i} </td>
+								<td itemprop="name"> ${object.title} </td>
+								<td itemprop="containedInPlace"> ${object.description} </td>
+								<td itemprop="keywords"> ${object.key} </td>
+								<td><img itemprop="url" style=" max-width:50px;" src=${object.image}></td>
+								<td><i class="fas fa-edit" href="#buscar" onclick="editEntity('${object._id}')" style="	cursor: pointer !important;" title="Editar"></i> &nbsp; &nbsp; &nbsp;
+									<i class="fas fa-trash" onclick="deleteEntity('${object._id}')"style="	cursor: pointer !important;" title="Eliminar"></i>
+								</td>
+							</tr>
+						</table>
+						-->
+					</div>
+					<!-- Cuando no hay registros -->
+					<div id="databaseTableNoData" style="display:none">
+						<table>
+							<tr><td align="center">No se ha encontrado información de Wikidata, favor F5</td></tr>
+						</table>
 					</div>
 				</div>
 			</section>
@@ -495,6 +536,45 @@ print 'It took ' + i + ' iterations to sort the deck.';</code></pre>
 				</div>
 			</section>
 		-->
+
+		<div id="main">
+
+			<!-- buscar guardar-->
+			<article id="buscar">
+				<h2 class="major">Buscar</h2>
+				<h2 class="major" id="lblError">Debe ingresar algún valor</h2>
+				<table>
+					<tr>
+						<td>
+							<ul id="entities"></ul>
+
+						</td>
+					</tr>
+					<tr><td><button type="button" id="btnsave" onclick="saveEntity()">Guardar</button></td></tr>
+				</table>
+			</article>
+
+			<!-- Contenido Actual -->
+			<article id="ownentities">
+				<div>
+					<h2>Contenido Actual</h2>
+					<div id="contenttable"> </div>
+				</div>
+			</article>
+
+			<!-- actualizar -->
+			<article id="actualizar">
+				<h2 class="major">Actualizar</h2>
+				<table>
+					<tr>
+						<td>
+							<ul id="entitiesedit"></ul>
+						</td>
+					</tr>
+					<tr><td><button type="button"  onclick="saveEntity(true)">Guardar</button></td></tr>
+				</table>
+			</article>
+		</div>
 
 		<!-- Footer -->
 			<section id="footer">

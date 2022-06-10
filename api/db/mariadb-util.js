@@ -58,13 +58,13 @@ class MariaDBConnector {
                 console.log(data);
                 conn.release();
                 conn.end();
-                //dbConnector.end();
+                //this.dbConnector.end();
             })
             .catch( err => {
                 console.log(err);
                 conn.release();
                 conn.end();
-                //dbConnector.end();
+                //this.dbConnector.end();
             })
         return ret;
     }
