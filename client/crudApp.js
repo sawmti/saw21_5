@@ -80,7 +80,7 @@ async function getMembers () {
                             <td itemprop="containedInPlace"> ${object.description} </td>
                             <td itemprop="keywords"> ${object.key} </td>
                             <td><img itemprop="url" style=" max-width:50px;" src=${object.image}></td>
-                            <td><i class="fas fa-edit" href="#buscar" onclick="editEntity('${object._id}')" style="	cursor: pointer !important;" title="Editar"></i> &nbsp; &nbsp; &nbsp; 
+                            <td><i class="fas fa-edit" href="#buscar" onclick="editEntity('${object._id}')" style="	cursor: pointer !important;" title="Detalle"></i> &nbsp; &nbsp; &nbsp; 
                                 <i class="fas fa-trash" onclick="deleteEntity('${object._id}')"style="	cursor: pointer !important;" title="Eliminar"></i>
                             </td>
                         </tr>`;
@@ -151,7 +151,7 @@ async function searchOwnEntities(value){
                             <td itemprop="containedInPlace"> ${object.description} </td>
                             <td itemprop="keywords"> ${object.key} </td>
                             <td><img itemprop="url" style=" max-width:50px;" src=${object.image}></td>
-                            <td><i class="fas fa-edit" href="#buscar" onclick="editEntity('${object._id}')" style="	cursor: pointer !important;" title="Editar"></i> &nbsp; &nbsp; &nbsp; 
+                            <td><i class="fas fa-edit" href="#buscar" onclick="editEntity('${object._id}')" style="	cursor: pointer !important;" title="Detalle"></i> &nbsp; &nbsp; &nbsp; 
                                 <i class="fas fa-trash" onclick="deleteEntity('${object._id}')"style="	cursor: pointer !important;" title="Eliminar"></i>
                             </td>
                         </tr>`;
@@ -215,7 +215,7 @@ function getTableData() {
         insertIntoTableView(item, index + 1);
     })
 
-     */
+     
 }
 
 /**

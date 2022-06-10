@@ -101,18 +101,19 @@ async function getDatabaseCountries() {
         if( objtoshow != null && objtoshow.data.length > 0 ){
 
             console.log(objtoshow.data.length);
-            /*for (const object of objtoshow.data ){
+            //detalle borre comentariado
+            for (const object of objtoshow.data ){
                 contentTable += `<tr itemscope itemtype="https://schema.org/Country">
                     <td> ${object.id} </td>
                     <td itemprop="name"><img itemprop="url" style=" max-width:50px;" src=${object.icon_svg_uri}></td>
                     <td itemprop="containedInPlace"> ${object.name} </td>
                     <td itemprop="keywords"> ${object.search_uri} </td>
                     <!-- <td><img itemprop="url" style=" max-width:50px;" src=${object.image}></td> -->
-                    <td><i class="fas fa-edit" href="#buscar" onclick="editEntity('${object._id}')" style="	cursor: pointer !important;" title="Editar"></i> &nbsp; &nbsp; &nbsp; 
+                    <td><i class="fas fa-edit" href="#buscar" onclick="editEntity('${object._id}')" style="	cursor: pointer !important;" title="Detalle"></i> &nbsp; &nbsp; &nbsp; 
                         <i class="fas fa-trash" onclick="deleteEntity('${object._id}')"style="	cursor: pointer !important;" title="Eliminar"></i>
                     </td>
                 </tr>`;
-            }*/
+            }
 
             contentTable +="</table>"
             document.getElementById('databaseTable').style.display = '';

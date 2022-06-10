@@ -1,12 +1,12 @@
 <!DOCTYPE HTML>
 <!--
-	Photon by HTML5 UP
+	SAW - MTI2021
 	html5up.net | @ajlkn
 	Free for personal and commercial use under the CCA 3.0 license (html5up.net/license)
 -->
 <html>
 	<head>
-		<title>Photon by HTML5 UP</title>
+		<title>SAW - MTI2021</title>
 		<meta charset="utf-8" />
 		<meta name="viewport" content="width=device-width, initial-scale=1, user-scalable=no" />
 		<link rel="stylesheet" href="assets/css/main.css" />
@@ -98,7 +98,7 @@
 					</div>
 					-->
 					<div id="wikidataTable">
-						<!--
+				
 						<table>
 							<tr><td>#</td><td>Bandera</td><td>Nombre de Pais</td><td>URL Wikidata</td><td>Acciones<td></tr>
 							<tr itemscope itemtype="https://schema.org/Country">
@@ -107,12 +107,12 @@
 								<td itemprop="containedInPlace"> ${object.description} </td>
 								<td itemprop="keywords"> ${object.key} </td>
 								<td><img itemprop="url" style=" max-width:50px;" src=${object.image}></td>
-								<td><i class="fas fa-edit" href="#buscar" onclick="editEntity('${object._id}')" style="	cursor: pointer !important;" title="Editar"></i> &nbsp; &nbsp; &nbsp;
+								<td><i class="fas fa-edit" href="#buscar" onclick="editEntity('${object._id}')" style="	cursor: pointer !important;" title="Detalle"></i> &nbsp; &nbsp; &nbsp;
 									<i class="fas fa-trash" onclick="deleteEntity('${object._id}')"style="	cursor: pointer !important;" title="Eliminar"></i>
 								</td>
 							</tr>
 						</table>
-						-->
+					
 					</div>
 					<!-- Cuando no hay registros -->
 					<div id="wikidataTableNoData" style="display:none">
@@ -144,7 +144,7 @@
 					</div>
 					-->
 					<div id="databaseTable">
-						<!--
+						
 						<table>
 							<tr><td>#</td><td>Bandera</td><td>Nombre de Pais</td><td>URL Wikidata</td><td>Acciones<td></tr>
 							<tr itemscope itemtype="https://schema.org/Country">
@@ -153,12 +153,12 @@
 								<td itemprop="containedInPlace"> ${object.description} </td>
 								<td itemprop="keywords"> ${object.key} </td>
 								<td><img itemprop="url" style=" max-width:50px;" src=${object.image}></td>
-								<td><i class="fas fa-edit" href="#buscar" onclick="editEntity('${object._id}')" style="	cursor: pointer !important;" title="Editar"></i> &nbsp; &nbsp; &nbsp;
+								<td><i class="fas fa-edit" href="#buscar" onclick="editEntity('${object._id}')" style="	cursor: pointer !important;" title="Detalle"></i> &nbsp; &nbsp; &nbsp;
 									<i class="fas fa-trash" onclick="deleteEntity('${object._id}')"style="	cursor: pointer !important;" title="Eliminar"></i>
 								</td>
 							</tr>
 						</table>
-						-->
+						
 					</div>
 					<!-- Cuando no hay registros -->
 					<div id="databaseTableNoData" style="display:none">
