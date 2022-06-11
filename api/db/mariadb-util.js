@@ -15,7 +15,8 @@ class MariaDBConnector {
 
     async countriesListDb(){
         let sql = "select * from COUNTRIES";
-        return this.query( sql );
+        var resp = await this.query( sql );
+        return resp;
     }
 
     async countriesDetailDb( id ){
@@ -50,14 +51,15 @@ class MariaDBConnector {
     async query( param ){
 
         let conn = await this.dbConnector.getConnection();
-        let ret = null;
+        var ret = null;
 
-        conn.query( param )
+        return await conn.query( param )
             .then( data => {
                 ret = data;
-                console.log(data);
+                //console.log( data );
                 conn.release();
                 conn.end();
+                return data;
                 //this.dbConnector.end();
             })
             .catch( err => {
@@ -66,7 +68,6 @@ class MariaDBConnector {
                 conn.end();
                 //this.dbConnector.end();
             })
-        return ret;
     }
 }
 

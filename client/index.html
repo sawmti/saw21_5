@@ -173,39 +173,48 @@
 			<section id="three" class="main style1 special">
 				<div class="container">
 					<header class="major">
-						<h2>Adipiscing amet consequat</h2>
+						<h2>Wikidata Country Detail Info</h2>
 					</header>
-					<p>Ante nunc accumsan et aclacus nascetur ac ante amet sapien sed.</p>
+					<!--
 					<div class="row gtr-150">
-						<div class="col-4 col-12-medium">
-							<span class="image fit"><img src="images/pic02.jpg" alt="" /></span>
-							<h3>Magna feugiat lorem</h3>
-							<p>Adipiscing a commodo ante nunc magna lorem et interdum mi ante nunc lobortis non amet vis sed volutpat et nascetur.</p>
-							<ul class="actions special">
-								<li><a href="#" class="button">More</a></li>
-							</ul>
+						<div class="col-6 col-12-medium">
+							<header class="major">
+								<h2>Lorem ipsum dolor adipiscing<br />
+								amet dolor consequat</h2>
+							</header>
+							<p>Adipiscing a commodo ante nunc accumsan et interdum mi ante adipiscing. A nunc lobortis non nisl amet vis sed volutpat aclacus nascetur ac non. Lorem curae et ante amet sapien sed tempus adipiscing id accumsan.</p>
 						</div>
-						<div class="col-4 col-12-medium">
-							<span class="image fit"><img src="images/pic03.jpg" alt="" /></span>
-							<h3>Magna feugiat lorem</h3>
-							<p>Adipiscing a commodo ante nunc magna lorem et interdum mi ante nunc lobortis non amet vis sed volutpat et nascetur.</p>
-							<ul class="actions special">
-								<li><a href="#" class="button">More</a></li>
-							</ul>
+						<div class="col-6 col-12-medium imp-medium">
+							<span class="image fit"><img src="images/pic01.jpg" alt="" /></span>
 						</div>
-						<div class="col-4 col-12-medium">
-							<span class="image fit"><img src="images/pic04.jpg" alt="" /></span>
-							<h3>Magna feugiat lorem</h3>
-							<p>Adipiscing a commodo ante nunc magna lorem et interdum mi ante nunc lobortis non amet vis sed volutpat et nascetur.</p>
-							<ul class="actions special">
-								<li><a href="#" class="button">More</a></li>
-							</ul>
-						</div>
+					</div>
+					-->
+					<div id="wikidataCountryDetailTable">
+						<!--
+						<table>
+							<tr><td>#</td><td>Bandera</td><td>Nombre de Pais</td><td>URL Wikidata</td><td>Acciones<td></tr>
+							<tr itemscope itemtype="https://schema.org/Country">
+								<td> ${i} </td>
+								<td itemprop="name"> ${object.title} </td>
+								<td itemprop="containedInPlace"> ${object.description} </td>
+								<td itemprop="keywords"> ${object.key} </td>
+								<td><img itemprop="url" style=" max-width:50px;" src=${object.image}></td>
+								<td><i class="fas fa-edit" href="#buscar" onclick="editEntity('${object._id}')" style="	cursor: pointer !important;" title="Editar"></i> &nbsp; &nbsp; &nbsp;
+									<i class="fas fa-trash" onclick="deleteEntity('${object._id}')"style="	cursor: pointer !important;" title="Eliminar"></i>
+								</td>
+							</tr>
+						</table>
+						-->
+					</div>
+					<!-- Cuando no hay registros -->
+					<div id="wikidataCountryDetailNoData" style="display:none">
+						<table>
+							<tr><td align="center">No se ha encontrado información de Wikidata, favor F5</td></tr>
+						</table>
 					</div>
 				</div>
 			</section>
-
-		<!-- Four -->
+		<!-- Four
 			<section id="four" class="main style2 special">
 				<div class="container">
 					<header class="major">
@@ -218,7 +227,7 @@
 					</ul>
 				</div>
 			</section>
-
+		-->
 		<!-- Five -->
 		<!--
 			<section id="five" class="main style1">
@@ -539,7 +548,7 @@ print 'It took ' + i + ' iterations to sort the deck.';</code></pre>
 
 		<div id="main">
 
-			<!-- buscar guardar-->
+			<!-- buscar guardar
 			<article id="buscar">
 				<h2 class="major">Buscar</h2>
 				<h2 class="major" id="lblError">Debe ingresar algún valor</h2>
@@ -553,16 +562,16 @@ print 'It took ' + i + ' iterations to sort the deck.';</code></pre>
 					<tr><td><button type="button" id="btnsave" onclick="saveEntity()">Guardar</button></td></tr>
 				</table>
 			</article>
-
-			<!-- Contenido Actual -->
+			-->
+			<!-- Contenido Actual
 			<article id="ownentities">
 				<div>
 					<h2>Contenido Actual</h2>
 					<div id="contenttable"> </div>
 				</div>
 			</article>
-
-			<!-- actualizar -->
+			-->
+			<!-- actualizar
 			<article id="actualizar">
 				<h2 class="major">Actualizar</h2>
 				<table>
@@ -574,6 +583,7 @@ print 'It took ' + i + ' iterations to sort the deck.';</code></pre>
 					<tr><td><button type="button"  onclick="saveEntity(true)">Guardar</button></td></tr>
 				</table>
 			</article>
+			-->
 		</div>
 
 		<!-- Footer -->

@@ -57,7 +57,7 @@ function fillCountryDetail() {
 
 async function getWikidataCountries() {
     try{
-        document.getElementById('buscar').style.display = '';
+        //document.getElementById('buscar').style.display = '';
         var contentTable = "<table><tr><td>#</td><td>Bandera</td><td>Nombre de Pais</td><td>URL Wikidata</td><td>Acciones<td></tr>";
         var obj  = await fetch('/api/countries');
         var objtoshow = await obj.json();
@@ -77,6 +77,83 @@ async function getWikidataCountries() {
             }
 
             contentTable +="</table>"
+/*            console.log( 'Code.js WikiContent');
+            console.log( document.getElementById('wikidataTable')) ;
+            console.log( document.getElementById('wikidataTableNoData')) ;
+
+            document.getElementById('wikidataTable').style.display = '';
+            document.getElementById('wikidataTableNoData').style.display = 'none';*/
+            $('#wikidataTable').append(contentTable);
+
+        }
+        else{
+  /*          document.getElementById('wikidataTable').style.display = 'none';
+            document.getElementById('wikidataTableNoData').style.display = '';*/
+        }
+
+    }catch(error){
+        console.log("Ha ocurrido un error: " +  error);
+    }
+}
+
+async function getDatabaseCountries() {
+    try{
+        var contentTable = "<table><tr><td>#</td><td>Bandera</td><td>Nombre de Pais</td><td>URL Wikidata</td><td>Acciones<td></tr>";
+        var obj  = await fetch('/api/databaseCountries');
+        var objtoshow = await obj.json();
+        if( objtoshow != null && objtoshow.data.length > 0 ){
+            for (const object of objtoshow.data ){
+                contentTable += `<tr itemscope itemtype="https://schema.org/Country">
+                    <td> ${object.id} </td>
+                    <td itemprop="name"><img itemprop="url" style=" max-width:50px;" src=${object.flagUrl}></td>
+                    <td itemprop="containedInPlace"> ${object.name} </td>
+                    <td itemprop="keywords"> ${object.wikidataUrl} </td>
+                    <td><i class="fas fa-edit" href="#buscar" onclick="editEntity('${object._id}')" style="	cursor: pointer !important;" title="Editar"></i> &nbsp; &nbsp; &nbsp; 
+                        <i class="fas fa-trash" onclick="deleteEntity('${object.id}')"style="	cursor: pointer !important;" title="Eliminar"></i>
+                    </td>
+                </tr>`;
+            }
+
+            contentTable +="</table>"
+            document.getElementById('databaseTable').style.display = '';
+            document.getElementById('databaseTableNoData').style.display = 'none';
+            $('#databaseTable').append(contentTable);
+
+        }
+        else{
+            document.getElementById('databaseTable').style.display = 'none';
+            document.getElementById('databaseTableNoData').style.display = '';
+        }
+
+    }catch(error){
+        console.log("Ha ocurrido un error: " +  error);
+    }
+}
+
+async function viewWikidataCountryDetail( countryId ){
+
+    try{
+        //document.getElementById('buscar').style.display = '';
+        var contentTable = "<table><tr><td>#</td><td>Bandera</td><td>Nombre de Pais</td><td>URL Wikidata</td><td>Acciones<td></tr>";
+        var obj  = await fetch('/api/countries');
+        var objtoshow = await obj.json();
+        if( objtoshow != null && objtoshow.data.length > 0 ){
+
+            console.log(objtoshow.data.length);
+            for (const object of objtoshow.data ){
+                contentTable += `<tr itemscope itemtype="https://schema.org/Country">
+                    <td> ${object.id} </td>
+                    <td itemprop="name"><img itemprop="url" style=" max-width:50px;" src=${object.icon_svg_uri}></td>
+                    <td itemprop="containedInPlace"> ${object.name} </td>
+                    <td itemprop="keywords"> ${object.search_uri} </td>
+                    <td><i class="fas fa-glasses" href="#buscar" onclick="viewWikidataCountryDetail('${object.id}')" style="	cursor: pointer !important;" title="Detalle"></i> &nbsp; &nbsp; &nbsp; 
+                        <i class="fas fa-hdd" onclick="saveEntity('${object.id}')"style="	cursor: pointer !important;" title="Guardar"></i>
+                    </td>
+                </tr>`;
+            }
+
+            contentTable +="</table>"
+
             document.getElementById('wikidataTable').style.display = '';
             document.getElementById('wikidataTableNoData').style.display = 'none';
             $('#wikidataTable').append(contentTable);
@@ -90,47 +167,11 @@ async function getWikidataCountries() {
     }catch(error){
         console.log("Ha ocurrido un error: " +  error);
     }
+
 }
 
-async function getDatabaseCountries() {
-    try{
-        document.getElementById('buscar').style.display = '';
-        var contentTable = "<table><tr><td>#</td><td>Bandera</td><td>Nombre de Pais</td><td>URL Wikidata</td><td>Acciones<td></tr>";
-        var obj  = await fetch('/api/databaseCountries');
-        var objtoshow = await obj.json();
-        if( objtoshow != null && objtoshow.data.length > 0 ){
 
-            console.log(objtoshow.data.length);
-            /*for (const object of objtoshow.data ){
-                contentTable += `<tr itemscope itemtype="https://schema.org/Country">
-                    <td> ${object.id} </td>
-                    <td itemprop="name"><img itemprop="url" style=" max-width:50px;" src=${object.icon_svg_uri}></td>
-                    <td itemprop="containedInPlace"> ${object.name} </td>
-                    <td itemprop="keywords"> ${object.search_uri} </td>
-                    <!-- <td><img itemprop="url" style=" max-width:50px;" src=${object.image}></td> -->
-                    <td><i class="fas fa-edit" href="#buscar" onclick="editEntity('${object._id}')" style="	cursor: pointer !important;" title="Editar"></i> &nbsp; &nbsp; &nbsp; 
-                        <i class="fas fa-trash" onclick="deleteEntity('${object._id}')"style="	cursor: pointer !important;" title="Eliminar"></i>
-                    </td>
-                </tr>`;
-            }*/
-
-            contentTable +="</table>"
-            document.getElementById('databaseTable').style.display = '';
-            document.getElementById('databaseTableNoData').style.display = 'none';
-            $('#wikidataTable').append(contentTable);
-
-        }
-        else{
-            document.getElementById('databaseTable').style.display = 'none';
-            document.getElementById('databaseTableNoData').style.display = '';
-        }
-
-    }catch(error){
-        console.log("Ha ocurrido un error: " +  error);
-    }
-}
-
-async function viewEntity( identity ){
+async function _viewEntity( identity ){
 
     var obj  = await fetch('/api/country/'+identity );
     var objtoshow = await obj.json();
