@@ -11,13 +11,10 @@ MariaDBConnector = require('./db/mariadb-util');
 const app = express();
 const root = path.resolve(__dirname, '..');
 
-// Log invocations
 app.use(function (req, res, next) { console.log(req.url); next(); });
 
-// Directly serve static content from /client
 app.use(express.static(root + '/client'));
 
-// Simple REST API that returns some entities
 app.get('/api/entitiesStatic', (req, res) =>
   res.send({
     entities:
@@ -26,21 +23,6 @@ app.get('/api/entitiesStatic', (req, res) =>
       ]
   })
 );
-
-app.get('/api/entities2/:id', (req, res) => {
-
-  const resultado =  wikiCall( wqCountry(),1 ).then( wikiLst => {
-    console.log(wikiLst.entities);
-    /*const ulEntities = document.getElementById("entities");
-    data.entities.forEach(entity => {
-    const liEntity = document.createElement("li");
-    const text = document.createTextNode(entity);
-    liEntity.appendChild(text);
-    ulEntities.appendChild(liEntity);*/
-  })
-  console.log( "resultado1:"+ resultado );
-  res.send( { data: resultado } );
-});
 
 app.get('/api/country/:id', (req, res) => {
 
@@ -114,9 +96,6 @@ app.get('/api/databaseCountries', async (req, res) => {
   let results = await MariaDBConnector.countriesListDb();
   console.log('Result: ' + results)
   res.send( { data: results } )
-  //res.send( result );
-  //res.send( { data: result } );
-
 });
 
 app.post('/api/insertCountry', async (req, res) => {

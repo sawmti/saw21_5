@@ -73,7 +73,7 @@ async function getWikidataCountries() {
                     <input id="name${object.id}" value="${object.name}" type="hidden">
                     <td itemprop="keywords"> ${object.search_uri} </td>
                      <input id="search_uri${object.id}" value="${object.search_uri}" type="hidden">
-                    <td><i class="fas fa-glasses" href="#buscar" onclick="viewWikidataCountryDetail('${object.id}')" style="	cursor: pointer !important;" title="Detalle"></i> &nbsp; &nbsp; &nbsp; 
+                    <td><i class="fas fa-glasses" href="#three" onclick="viewWikidataCountryDetail('${object.id}')" style="	cursor: pointer !important;" title="Detalle"></i> &nbsp; &nbsp; &nbsp; 
                         <i class="fas fa-hdd" onclick="saveEntity('${object.id}')"style="	cursor: pointer !important;" title="Guardar"></i>
                     </td>
                 </tr>`;
@@ -132,10 +132,10 @@ async function getDatabaseCountries() {
 async function viewWikidataCountryDetail( countryId ){
 
     console.log('viewWikidataCountryDetail');
-    console.log( countryId );
+    //document.getElementById("wikidataCountryDetailTable").innerHTML = "";
 
     try{
-        var contentTable = `<header class="major"><h2>Wikidata Country Detail Info</h2></header>`;
+        var contentTable = `<header class="major"><h2>Detalle Pais - Wikidata</h2></header>`;
         var obj  = await fetch('/api/country/'+countryId );
         var objtoshow = await obj.json();
         console.log(objtoshow.data);
@@ -175,87 +175,6 @@ async function viewWikidataCountryDetail( countryId ){
         console.log("Ha ocurrido un error: " +  error);
     }
 
-}
-
-
-async function _viewEntity( identity ){
-
-    var obj  = await fetch('/api/country/'+identity );
-    var objtoshow = await obj.json();
-    console.log( objtoshow );
-    await fillObjectEdit(objtoshow,"entitiesedit");
-    //$('#ownentities').hide();
-    document.getElementById('ownentities').style.display = 'none';
-    document.getElementById('actualizar').style.display = '';
-    document.getElementById('actualizar').classList.add("active");
-
-}
-
-async function fillObject(objtoshow, entity){
-    const ulEntities = document.getElementById(entity);
-    document.getElementById(entity).innerHTML = "";
-
-    objtoshow.forEach(async object => {
-
-        ulEntities.append(await getelement(object.capital,"capital"));
-        //ulEntities.append(await getelementImg(object.thumbnail ? object.thumbnail.url : object.image));
-        ulEntities.append(await getelement(object.countryPopulation,"countryPopulation"));
-        ulEntities.append(await getelement(object.lifeExpectancy,"lifeExpectancy"));
-        ulEntities.append(await getelement(object.name,"name"));
-
-    });
-}
-
-async function getelement(show, id){
-    const li = document.createElement("li");
-    li.setAttribute("id", id);
-    const text = document.createTextNode(show);
-    li.appendChild(text);
-    return  li
-}
-
-async function fillObjectEdit(objtoshow, entity){
-    const ulEntities = document.getElementById(entity);
-    document.getElementById(entity).innerHTML = "";
-    console.log(objtoshow);
-    for (const object of objtoshow.data ){
-    //objtoshow.data.forEach(async object => {
-
-        ulEntities.append(await getTextBoxelement(object.title,"title",false,"Título"));
-        ulEntities.append(await getTextBoxelement((object.thumbnail ? object.thumbnail.url : object.image),"url",false,"Imagen"));
-        //ulEntities.append(await getelementImg(object.thumbnail ? object.thumbnail.url : object.image));
-        ulEntities.append(await getTextBoxelement(object.description,"description",false,"Descripción"));
-        ulEntities.append(await getTextBoxelement(object.key,"key",false,"Key"));
-        ulEntities.append(await getTextBoxelement(object.excerpt,"excerpt",false,"Extracto"));
-        ulEntities.append(await getTextBoxelement(object._id,"id",true,""));
-
-    };
-}
-
-async function getTextBoxelement(show, id, hide,lbltext){
-    var txtBox = document.createElement("INPUT");
-    txtBox.setAttribute("type", "text");
-    txtBox.setAttribute("id", "txt"+id);
-    txtBox.value = show;
-
-
-
-    const li = document.createElement("li");
-    li.setAttribute("id", id);
-
-    if(hide){
-        txtBox.style.display = 'none';
-        li.style.display = 'none';
-    }
-
-    if(lbltext){
-        var lbl = document.createElement("label");
-        lbl.innerHTML = lbltext;
-        li.appendChild(lbl);
-    }
-
-    li.appendChild(txtBox);
-    return  li
 }
 
 async function saveEntity( obj ){
