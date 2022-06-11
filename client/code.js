@@ -56,39 +56,38 @@ function fillCountryDetail() {
 }
 
 async function getWikidataCountries() {
+
     try{
-        //document.getElementById('buscar').style.display = '';
         var contentTable = "<table><tr><td>#</td><td>Bandera</td><td>Nombre de Pais</td><td>URL Wikidata</td><td>Acciones<td></tr>";
         var obj  = await fetch('/api/countries');
         var objtoshow = await obj.json();
         if( objtoshow != null && objtoshow.data.length > 0 ){
 
-            console.log(objtoshow.data.length);
             for (const object of objtoshow.data ){
                 contentTable += `<tr itemscope itemtype="https://schema.org/Country">
-                    <td> ${object.id} </td>
+                    <td>${object.id}</td>
+                    <input id="id${object.id}" value="${object.id}" type="hidden">
                     <td itemprop="name"><img itemprop="url" style=" max-width:50px;" src=${object.icon_svg_uri}></td>
+                    <input id="icon_svg_uri${object.id}" value="${object.icon_svg_uri}" type="hidden">
                     <td itemprop="containedInPlace"> ${object.name} </td>
+                    <input id="name${object.id}" value="${object.name}" type="hidden">
                     <td itemprop="keywords"> ${object.search_uri} </td>
-                    <td><i class="fas fa-glasses" href="#buscar" onclick="viewEntity('${object.id}')" style="	cursor: pointer !important;" title="Detalle"></i> &nbsp; &nbsp; &nbsp; 
+                     <input id="search_uri${object.id}" value="${object.search_uri}" type="hidden">
+                    <td><i class="fas fa-glasses" href="#buscar" onclick="viewWikidataCountryDetail('${object.id}')" style="	cursor: pointer !important;" title="Detalle"></i> &nbsp; &nbsp; &nbsp; 
                         <i class="fas fa-hdd" onclick="saveEntity('${object.id}')"style="	cursor: pointer !important;" title="Guardar"></i>
                     </td>
                 </tr>`;
             }
 
             contentTable +="</table>"
-/*            console.log( 'Code.js WikiContent');
-            console.log( document.getElementById('wikidataTable')) ;
-            console.log( document.getElementById('wikidataTableNoData')) ;
-
             document.getElementById('wikidataTable').style.display = '';
-            document.getElementById('wikidataTableNoData').style.display = 'none';*/
+            document.getElementById('wikidataTableNoData').style.display = 'none';
             $('#wikidataTable').append(contentTable);
 
         }
         else{
-  /*          document.getElementById('wikidataTable').style.display = 'none';
-            document.getElementById('wikidataTableNoData').style.display = '';*/
+            document.getElementById('wikidataTable').style.display = 'none';
+            document.getElementById('wikidataTableNoData').style.display = '';
         }
 
     }catch(error){
@@ -108,7 +107,7 @@ async function getDatabaseCountries() {
                     <td itemprop="name"><img itemprop="url" style=" max-width:50px;" src=${object.flagUrl}></td>
                     <td itemprop="containedInPlace"> ${object.name} </td>
                     <td itemprop="keywords"> ${object.wikidataUrl} </td>
-                    <td><i class="fas fa-edit" href="#buscar" onclick="editEntity('${object._id}')" style="	cursor: pointer !important;" title="Editar"></i> &nbsp; &nbsp; &nbsp; 
+                    <td><i class="fas fa-edit" href="#buscar" onclick="viewWikidataCountryDetail('${object._id}')" style="	cursor: pointer !important;" title="Editar"></i> &nbsp; &nbsp; &nbsp; 
                         <i class="fas fa-trash" onclick="deleteEntity('${object.id}')"style="	cursor: pointer !important;" title="Eliminar"></i>
                     </td>
                 </tr>`;
@@ -132,36 +131,44 @@ async function getDatabaseCountries() {
 
 async function viewWikidataCountryDetail( countryId ){
 
-    try{
-        //document.getElementById('buscar').style.display = '';
-        var contentTable = "<table><tr><td>#</td><td>Bandera</td><td>Nombre de Pais</td><td>URL Wikidata</td><td>Acciones<td></tr>";
-        var obj  = await fetch('/api/countries');
-        var objtoshow = await obj.json();
-        if( objtoshow != null && objtoshow.data.length > 0 ){
+    console.log('viewWikidataCountryDetail');
+    console.log( countryId );
 
-            console.log(objtoshow.data.length);
+    try{
+        var contentTable = `<header class="major"><h2>Wikidata Country Detail Info</h2></header>`;
+        var obj  = await fetch('/api/country/'+countryId );
+        var objtoshow = await obj.json();
+        console.log(objtoshow.data);
+        if( objtoshow != null && objtoshow.data.length > 0 ){
             for (const object of objtoshow.data ){
-                contentTable += `<tr itemscope itemtype="https://schema.org/Country">
-                    <td> ${object.id} </td>
-                    <td itemprop="name"><img itemprop="url" style=" max-width:50px;" src=${object.icon_svg_uri}></td>
-                    <td itemprop="containedInPlace"> ${object.name} </td>
-                    <td itemprop="keywords"> ${object.search_uri} </td>
-                    <td><i class="fas fa-glasses" href="#buscar" onclick="viewWikidataCountryDetail('${object.id}')" style="	cursor: pointer !important;" title="Detalle"></i> &nbsp; &nbsp; &nbsp; 
-                        <i class="fas fa-hdd" onclick="saveEntity('${object.id}')"style="	cursor: pointer !important;" title="Guardar"></i>
-                    </td>
-                </tr>`;
+                console.log(object.capital);
+                contentTable += `<div>
+                                    <h2>${object.name}</h2>
+                                    <img itemprop="url" style=" max-width:120px;" src=${object.icon_svg_uri}><br/><br/>
+                                 </div>
+                                 <div class="row gtr-150">
+                                    <div class="col-4 col-12-medium">
+                                        <h3>Capital<br/>${object.capital}</h3>
+                                        <h3>Poblacion<br/>${object.countryPopulation}</h3>
+                                    </div>
+                                    <div class="col-4 col-12-medium">
+                                        <h3>Indice Desarrollo Humano<br/>${object.humanDevelopmentIndex}</h3>
+                                        <h3>Expectativa de Vida<br/>${object.lifeExpectancy}</h3>
+                                    </div>
+                                     <div class="col-4 col-12-medium">
+                                        <h3>Moneda<br/>${object.currency}</h3>
+                                        <h3>URL<br/>${object.search_uri}</h3>
+                                    </div>`;
             }
 
-            contentTable +="</table>"
-
-            document.getElementById('wikidataTable').style.display = '';
-            document.getElementById('wikidataTableNoData').style.display = 'none';
-            $('#wikidataTable').append(contentTable);
+            document.getElementById('wikidataCountryDetailTable').style.display = '';
+            document.getElementById('wikidataCountryDetailNoData').style.display = 'none';
+            $('#wikidataCountryDetailTable').append(contentTable);
 
         }
         else{
-            document.getElementById('wikidataTable').style.display = 'none';
-            document.getElementById('wikidataTableNoData').style.display = '';
+            document.getElementById('wikidataCountryDetailTable').style.display = 'none';
+            document.getElementById('wikidataCountryDetailNoData').style.display = '';
         }
 
     }catch(error){

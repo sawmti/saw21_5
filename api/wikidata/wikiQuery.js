@@ -1,10 +1,11 @@
 const wqCountryInfo =  function ( idPais ) {
 
-    const query = `SELECT DISTINCT ?country ?countryLabel ?capitalLabel ?countryPopulation ?currencyLabel ?humanDevelopmentIndexLabel ?lifeExpectancyLabel ?languageLabel
+    const query = `SELECT DISTINCT ?country ?countryLabel ?capitalLabel ?countryPopulation ?currencyLabel ?humanDevelopmentIndexLabel ?lifeExpectancyLabel ?languageLabel ?image
             WHERE
             {
                 ?country wdt:P31 wd:Q3624078 .
                 ?country wdt:P17 wd:${idPais} .
+                ?country wdt:P41 ?image .
                 OPTIONAL { ?country wdt:P1082 ?countryPopulation } .
                 OPTIONAL { ?country wdt:P38 ?currency } .
                 OPTIONAL { ?country wdt:P1081 ?humanDevelopmentIndex } .

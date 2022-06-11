@@ -5,7 +5,7 @@ const querystring = require("querystring")
 
 const { wqCountry,wqCountryInfo } = require("./wikidata/wikiQuery");
 const { wikiCall,formatCountries,formatCountryDetail } = require("./wikidata/wikiUtil");
-//const { connection } = require("./db/mysql-util.txt");
+
 MariaDBConnector = require('./db/mariadb-util');
 
 const app = express();
